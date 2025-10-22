@@ -1,0 +1,14 @@
+[
+  {
+    "type": "file",
+    "name": "Sintel Trailer (MP4)",
+    "path": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+    "description": "Short trailer for the open-source film Sintel."
+  },
+  {
+    "type": "file",
+    "name": "Big Buck Bunny (MP4)",
+    "path": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "description": "Full-length open-source film Big Buck Bunny."
+  }
+]

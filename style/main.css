@@ -1,0 +1,304 @@
+/* GLOBAL BOX-SIZING RESET (New addition to prevent padding overflow issues) */
+* {
+    box-sizing: border-box;
+}
+
+/* Color Palette and Variables */
+:root {
+    /* Using Inter from Google Fonts linked in HTML */
+    --font-family: 'Inter', sans-serif;
+
+    /* Core Colors */
+    --bg-dark: #0f172a;         /* Deeper dark blue-slate background */
+    --card-dark: #1e293b;       /* Sidebar and card background - slightly lighter */
+    --border-dark: #334155;     /* Subtle borders */
+    --text-light: #f1f5f9;      /* Main text color */
+    --text-muted: #94a3b8;      /* Secondary text */
+    
+    /* Accent */
+    --accent-cyan: #06b6d4;     /* Primary Teal/Cyan accent */
+    --accent-hover: #0ea5e9;    /* Slightly brighter on hover (Sky Blue) */
+    --glow-cyan: rgba(6, 182, 212, 0.4); /* Soft teal glow */
+    --shadow-dark: rgba(0, 0, 0, 0.4);
+
+    /* Spacing */
+    --padding-main: 1.5rem;
+    --radius-main: 0.5rem;
+}
+
+/* Base Styles & Full-Screen Setup */
+html {
+    /* Set HTML height to 100% */
+    height: 100%; 
+    margin: 0;
+    /* Let the browser handle the overflow */
+    overflow: auto;
+}
+
+body {
+    /* FIX 1: Set body height to 100% and use min-height: 100vh to ensure it fills the screen */
+    height: 100%; 
+    min-height: 100vh;
+    margin: 0;
+    /* FIX 2: Set overflow hidden on body to prevent double scrollbars, relying on .app-wrapper */
+    overflow: hidden; 
+    
+    font-family: var(--font-family);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: var(--padding-main); /* Uniform padding */
+    display: flex;
+    flex-direction: column;
+    /* Smooth visual transitions */
+    transition: background-color 0.3s ease;
+}
+
+.app-wrapper {
+    max-width: 1600px; /* Wider for more space */
+    margin: 0 auto;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* Must have min-height: 0 to play nicely in a flex column container */
+    min-height: 0; 
+    /* FIX 3: This element is now responsible for scrolling the main content */
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* Header */
+.app-header {
+    text-align: center;
+    padding-bottom: 1rem;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-dark);
+    margin-bottom: 1.5rem;
+}
+
+.main-title {
+    font-size: 1.8rem; /* Slightly larger */
+    font-weight: 600; /* Bolder */
+    letter-spacing: 0.02em;
+    color: var(--text-light);
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.header-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-right: 0.75rem;
+    color: var(--accent-cyan);
+    filter: drop-shadow(0 0 5px var(--glow-cyan)); /* Subtle glow on the icon */
+}
+
+/* --- MAIN LAYOUT GRID --- */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 1.5rem; /* Increased gap */
+    flex-grow: 1; 
+    /* Must have min-height: 0 when inside a column flex container (app-wrapper) */
+    min-height: 0; 
+}
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+    .main-grid {
+        /* Split layout: Player (75%) and Controls (25%) */
+        grid-template-columns: 3fr 1fr; 
+    }
+}
+
+/* --- PLAYER COLUMN (LEFT) --- */
+.player-column {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.player-container {
+    flex-grow: 1;
+    min-height: 0;
+    position: relative;
+    border-radius: var(--radius-main);
+    /* Modern, less aggressive shadow and a subtle border */
+    box-shadow: 0 4px 15px var(--shadow-dark), 0 0 10px var(--glow-cyan);
+    overflow: hidden; 
+}
+
+.media-player {
+    width: 100%;
+    height: 100%; 
+    object-fit: contain; /* Use 'contain' to respect video aspect ratio better */
+    background-color: #000;
+    border: none;
+}
+
+/* --- CONTROLS PANEL (RIGHT) --- */
+.controls-panel {
+    padding: 1.5rem;
+    background-color: var(--card-dark);
+    border-radius: var(--radius-main);
+    box-shadow: 0 4px 10px var(--shadow-dark);
+    border: 1px solid var(--border-dark);
+    /* IMPORTANT: Must be a column flex container for children to use flex-grow */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Space between control sections */
+    flex-shrink: 0; 
+    /* This element's content should still scroll independently if its content overflows */
+    overflow-y: auto;
+}
+
+/* Section Title inside the Panel */
+.panel-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--border-dark);
+    padding-bottom: 0.5rem;
+}
+
+.control-group {
+    padding-bottom: 0; /* Remove old padding */
+    margin-bottom: 0; /* Remove old margin */
+    border-bottom: none; /* Remove dashed line, replaced by panel-title/gap */
+}
+
+
+/* Source Buttons Styling */
+.source-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem; 
+}
+
+.btn-source {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: var(--radius-main);
+    background-color: transparent; /* Transparent button base */
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan); /* Cyan outline */
+    cursor: pointer;
+    transition: all 200ms ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.btn-source:hover {
+    background-color: var(--accent-cyan);
+    color: var(--bg-dark); /* Dark text on hover */
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px var(--glow-cyan); /* Subtle glow on hover */
+}
+
+/* Renderer Settings Styling */
+.renderer-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.setting-label {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-light);
+    margin-right: 0.5rem;
+}
+
+.form-select {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-dark);
+    color: var(--text-light);
+    font-size: 0.85rem;
+    border-radius: var(--radius-main);
+    padding: 0.5rem 0.75rem;
+    appearance: none;
+    cursor: pointer;
+    text-align: right;
+    width: 50%;
+    transition: border-color 0.2s;
+}
+
+.form-select:hover, .form-select:focus {
+    border-color: var(--accent-cyan);
+    outline: none;
+}
+
+/* Plugin Toggles Styling */
+.plugin-toggles {
+    display: flex;
+    flex-direction: column; 
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+}
+
+.checkbox-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-main);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.checkbox-label:hover {
+    background-color: rgba(6, 182, 212, 0.1); /* Subtle background on hover */
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 0.75rem;
+    /* Custom checkbox styling using accent-color */
+    accent-color: var(--accent-cyan);
+    width: 1.1em;
+    height: 1.1em;
+    min-width: 1.1em; /* Prevent shrinking */
+}
+
+/* Playlists Group Styling (UPDATED for full height) */
+.playlist-group {
+    /* REMOVED: max-height property to allow expansion */
+    flex-grow: 1; /* Allows this container to consume all available vertical space */
+    min-height: 100px; /* Ensure it starts with some height */
+    overflow-y: auto;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-main);
+    padding: 0.75rem;
+    display: flex; /* Make it a flex container */
+    flex-direction: column; /* Stack content vertically */
+}
+
+.playlist-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1; /* Make the list itself take up the remaining height within the group */
+}
+
+.playlist-list li {
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: var(--radius-main);
+    transition: background-color 0.2s ease;
+}
+
+.playlist-list li:hover {
+    background-color: rgba(6, 182, 212, 0.1);
+}
+
+.playlist-list li.active {
+    background-color: rgba(6, 182, 212, 0.3);
+}
