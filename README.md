@@ -16,8 +16,8 @@ Remote proxy & caching: Service Worker caches video streams for offline or faste
 
 ⚙️ How to Run the Project
 1. Clone the Repository
-git clone https://github.com/your-username/repo-name.git
-cd repo-name
+git clone https://github.com/joshuaserrano224/Laboratory2.git
+cd Laboratory2
 
 2. Open in VS Code
 
