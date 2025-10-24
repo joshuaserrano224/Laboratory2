@@ -31,9 +31,6 @@ This will launch:
 
 http://127.0.0.1:5500/index.html
 
-4. Allow Service Worker
-
-If prompted by the browser, allow service worker registration for caching streams (sw.js).
 
 🧪 How to Test
 ▶️ Demo Interaction
@@ -44,22 +41,8 @@ Click “Load Local File”, “HLS Stream”, or “Remote API” to play diffe
 
 Toggle Subtitles, Equalizer, or Watermark plugins.
 
-Browse your playlist panel — supports nested folders (via index.json).
+Browse your playlist panel — supports nested folders.
 
-Open DevTools → Console to verify service worker caching logs (e.g., [SW] Fetching and caching:).
-
-📁 Project Structure
-├── index.html
-├── main.js
-├── sw.js                 # Service Worker (Proxy + Cache)
-├── playlist/
-│   ├── index.json        # Composite playlist definition
-│   └── subplaylist/
-│       └── index.json
-├── js/
-│   ├── sources/          # LocalSource, HLSSource, RemoteAPISource
-│   ├── plugins/          # SubtitlePlugin, EqualizerPlugin, WatermarkPlugin
-│   └── renderers/        # HardwareRenderer, SoftwareRenderer
 
 🧠 Design Patterns Used
 
